@@ -1,0 +1,2 @@
+D:\code\game\game\x64\Debug\game.exe
+D:\github_code\C_learn_code\game\x64\Debug\game.exe

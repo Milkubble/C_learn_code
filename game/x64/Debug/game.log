@@ -1,0 +1,9 @@
+﻿  hannuota.c
+D:\github_code\C_learn_code\game\game.h(1,1): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  io.c
+D:\github_code\C_learn_code\game\game.h(1,1): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  sanziqi.c
+D:\github_code\C_learn_code\game\game.h(1,1): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+  正在生成代码...
+D:\github_code\C_learn_code\game\sanziqi.c(114): warning C4715: “Is_Win_sanziqi”: 不是所有的控件路径都返回值
+  game.vcxproj -> D:\github_code\C_learn_code\game\x64\Debug\game.exe
