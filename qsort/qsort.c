@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+void bubble_sort(void* stardp, int sz, int width, int(*tmp)(const void* e1, const void* e2));
+//åœ¨qsortçš„åŸºç¡€ä¸Šè‡ªå®šä¹‰ä¸€ä¸ªæ’åºå‡½æ•°
 
 void qsort(void* base, size_t num, size_t width, int(__cdecl* compare)(const void*, const void*));
-//base    :ÒªÅÅĞòµÄÔªËØµØÖ·
-//num     :ÔªËØ¸öÊı
-//width   :Ã¿¸öÔªËØ×Ö½Ú´óĞ¡
-//compare :ÓÃÀ´±È½ÏÁ½¸öÔªËØµÄº¯Êı
+//base    :è¦æ’åºçš„å…ƒç´ åœ°å€
+//num     :å…ƒç´ ä¸ªæ•°
+//width   :æ¯ä¸ªå…ƒç´ å­—èŠ‚å¤§å°
+//compare :ç”¨æ¥æ¯”è¾ƒä¸¤ä¸ªå…ƒç´ çš„å‡½æ•°
 //			{
-//				´óÓÚ -->  ·µ»Ø  1
-//				µÈÓÚ -->  ·µ»Ø  0
-//				Ğ¡ÓÚ -->  ·µ»Ø  -1
+//				å¤§äº -->  è¿”å›  1
+//				ç­‰äº -->  è¿”å›  0
+//				å°äº -->  è¿”å›  -1
 //			}
 
 
-//void* ÀàĞÍµÄÖ¸Õë  ¿ÉÒÔ½ÓÊÜÈÎºÎÀàĞÍµÄÖ¸Õë
-//void*             ²»ÄÜ½øĞĞ½âÒıÓÃ²Ù×÷
-//void*             ²»ÄÜ½øĞĞ+-ÕûÊıµÄ²Ù×÷
-//void*				²»ÄÜ½øĞĞ±È½Ï
+//void* ç±»å‹çš„æŒ‡é’ˆ  å¯ä»¥æ¥å—ä»»ä½•ç±»å‹çš„æŒ‡é’ˆ
+//void*             ä¸èƒ½è¿›è¡Œè§£å¼•ç”¨æ“ä½œ
+//void*             ä¸èƒ½è¿›è¡Œ+-æ•´æ•°çš„æ“ä½œ
+//void*				ä¸èƒ½è¿›è¡Œæ¯”è¾ƒ
 
 int tmp_int(const void* num1, const void* num2)
 {
@@ -50,10 +51,10 @@ int tmp_float(const void* num1, const void* num2)
 
 int tmp_str_name(const void* e1, const void* e2)
 {
-	//ĞèÒªÒıÓÃ	stdlib.h
-	//strcmp	´óÓÚ·µ»Ø	1
-	//			µÈÓÚ·µ»Ø	2
-	//			Ğ¡ÓÚ·µ»Ø	-1
+	//éœ€è¦å¼•ç”¨	stdlib.h
+	//strcmp	å¤§äºè¿”å›	1
+	//			ç­‰äºè¿”å›	2
+	//			å°äºè¿”å›	-1
 	return strcmp(((struct stu*)e1)->name, ((struct stu*)e2)->name);
 }
 
@@ -61,9 +62,14 @@ void int_arr(int i)
 {
 	int sz = 0;
 	int arr[] = { 1,1,4,5,1,4,1,9,1,9,8,1,0 };
-	sz = sizeof(arr) / sizeof(arr[0]);
+	//sz = sizeof(arr) / sizeof(arr[0]);
 
-	qsort(arr, sz, sizeof(arr[0]), tmp_int);
+	//qsort(arr, sz, sizeof(arr[0]), tmp_int);
+	//int arr[] = { 1,1,4,5,1,4,1,9,1,9,8,1,0 };
+	//int sz = 0;
+	//int arr[] = { 3,2,1 };
+	sz = sizeof(arr) / sizeof(arr[0]);
+	bubble_sort(arr, sz, sizeof(arr[0]), tmp_int);
 	for (; i < sz; i++)
 	{
 		printf("%d ", arr[i]);
@@ -90,20 +96,54 @@ void struct_stu_name(int i)
 	qsort(s1, sz, s1->name, tmp_str_name);
 }
 
+void swap(char* e1, char* e2, int width)
+{
+	int i = 0;
+	for (i = 0; i < width; i++);
+	{
+		char tmp = *e1;
+		*e1 = *e2;
+		*e2 = tmp;
+		e1++;
+		e2++;
+	}
+}
+
+void bubble_sort(void* stardp, int sz, int width, int(*cmp)(void* e1, void* e2))
+{
+	int i = 0;
+	//ç¡®å®šèººæ•°
+	for (; i < sz - 1; i++)
+	{
+		//ç¡®å®šä¸€è¶Ÿçš„å¤šå°‘
+		int j = 0;
+		for (; j < sz - i - 1; j++)
+		{
+			if (cmp((char*)stardp + j * width ,(char*)stardp + (j + 1) * width) > 0)
+			{
+				swap((char*)stardp + j * width, (char*)stardp + (1 + j) * width, width);
+			}
+		}
+	}
+}
 
 int main()
 {
 	int i = 0;
 	//int_arr(i);
 	//float_arr(i);
-	struct_stu_name(i);
+	//struct_stu_name(i);
+	int_arr(i);
 	return 0;
 }
 
 
 
-////Êı×éÃû -- ´ú±íÊ×ÔªËØµØÖ·  ||  Õû¸öÊı×é?
-////&arr -- ´ú±íÕû¸öÊı×éµÄµØÖ·
+////æ•°ç»„å -- ä»£è¡¨é¦–å…ƒç´ åœ°å€
+////&arr -- ä»£è¡¨æ•´ä¸ªæ•°ç»„çš„åœ°å€
+// sizeof(æ•°ç»„å)  --  æ•°ç»„åä»£è¡¨æ•´ä¸ªæ•°ç»„
+//sizeof(&æ•°ç»„å)  --  &æ•°ç»„åä»£è¡¨æ•´ä¸ªæ•°ç»„
+// 
 //
 //int main()
 //{
